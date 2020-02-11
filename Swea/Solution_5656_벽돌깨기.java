@@ -1,4 +1,4 @@
-package dd;
+package swea.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class Solution_5656_벽돌깨기 {
 					map[x][y] = 0;
 				}
 			}
-			for (int i = H - 1; i > H - down.size(); i--) {
+			for (int i = H - 1; i >= H - down.size(); i--) {
 				map[i][y] = down.get(cnt++);
 			}
 		}
@@ -122,7 +122,6 @@ public class Solution_5656_벽돌깨기 {
 				}
 			}
 		}
-		System.out.println(sum);
 		return sum;
 	}
 }

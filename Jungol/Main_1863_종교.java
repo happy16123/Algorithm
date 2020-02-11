@@ -1,4 +1,4 @@
-package dd;
+package jungol.bank;
 
 import java.io.BufferedReader;
 import java.io.IOException;
