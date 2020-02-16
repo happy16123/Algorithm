@@ -1,4 +1,4 @@
-package baek;
+package beak;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,7 +16,7 @@ public class Main_17135_캐슬디펜스 {
 	public static boolean[][] visited;
 	public static int[][] defaultMap;
 	public static int[] archer;
-	public static int[][] dir = {{0,-1}, {1,0}, {0,1}};
+	public static int[][] dir = {{0,-1}, {-1,0}, {0,1}};
 	public static ArrayList<int[]> attack;
 	public static int max = Integer.MIN_VALUE;
 
@@ -69,7 +69,7 @@ public class Main_17135_캐슬디펜스 {
 			while (cycle != N) {
 				cycle++;
 				for (int i = 0; i < 3; i++) {
-					dfs(archer[i]);
+					bfs(archer[i]);
 				}
 				visited = new boolean[N+1][M];
 				for(int j=0; j<attack.size(); j++) {
@@ -80,10 +80,10 @@ public class Main_17135_캐슬디펜스 {
 						ans++;
 					}
 				}
-				for (int i = 0; i < N + 1; i++) {
-				System.out.println(Arrays.toString(map[i]));
-				}
-				System.out.println(ans);
+//				for (int i = 0; i < N + 1; i++) {
+//				System.out.println(Arrays.toString(map[i]));
+//				}
+//				System.out.println(ans);
 				attack.clear();
 				down();
 			}
@@ -96,7 +96,7 @@ public class Main_17135_캐슬디펜스 {
 		}
 	}
 
-	public static void dfs(int index) {
+	public static void bfs(int index) {
 		LinkedList<int[]> q = new LinkedList<>();
 		int r = N - 1;
 		int c = index;
@@ -105,7 +105,6 @@ public class Main_17135_캐슬디펜스 {
 		int[] cur;
 		q.offer(new int[] {r, c, d});
 		if(map[r][c] == 1) {
-			visited[r][c] = true;
 			attack.add(new int[] {r, c});
 			return;
 		}
@@ -120,11 +119,11 @@ public class Main_17135_캐슬디펜스 {
 					nr = r + dir[i][0];
 					nc = c + dir[i][1];
 					if (nr > -1 && nc > -1 && nr < N && nc < M) {
-						if (map[nr][nc] == 1 && !visited[nr][nc]) {
-							visited[nr][nc] = true;
+						if (map[nr][nc] == 1) {
 							attack.add(new int[] {nr, nc});
 							return;
-						}if(map[nr][nc] == 0) {
+						}if(map[nr][nc] == 0 && !visited[nr][nc]) {
+							visited[nr][nc] = true;
 							q.offer(new int[] {nr, nc, d});
 						}
 					}
