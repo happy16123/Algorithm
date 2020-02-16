@@ -12,6 +12,7 @@ public class Main_1082_화염에서탈출 {
 	public static int X;
 	public static int Y;
 	public static char[][] map;
+	public static boolean[][] visited;
 	public static int[][] dir = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
 	public static ArrayList<int[]> fire;
 	public static int[] solider;
@@ -23,6 +24,7 @@ public class Main_1082_화염에서탈출 {
 		X = Integer.parseInt(st.nextToken());
 		Y = Integer.parseInt(st.nextToken());
 		map = new char[X][Y];
+		visited = new boolean[X][Y];
 		fire = new ArrayList<>();
 
 		for (int i = 0; i < X; i++) {
@@ -39,13 +41,8 @@ public class Main_1082_화염에서탈출 {
 				}
 			}
 		}
+		bfs(fire, solider[0], solider[1]);
 
-		if(fire != null) {
-			bfs(fire, solider[0], solider[1]);
-		} else {
-			bfs(solider[0], solider[1]);
-		}
-		
 		if (min == Integer.MAX_VALUE) {
 			System.out.println("impossible");
 		} else {
@@ -59,6 +56,7 @@ public class Main_1082_화염에서탈출 {
 		LinkedList<int[]> sq = new LinkedList<>();
 		int cnt = 0;
 		sq.offer(new int[] { sx, sy, ++cnt });
+		visited[sx][sy] = true;
 		int snx, sny;
 		int[] sCur;
 		snx = sx;
@@ -67,6 +65,7 @@ public class Main_1082_화염에서탈출 {
 		for (int i = 0; i < fire.size(); i++) {
 			fx = fire.get(i)[0];
 			fy = fire.get(i)[1];
+			visited[fx][fy] = true;
 			fq.offer(new int[] { fx, fy });
 		}
 		int fnx, fny;
@@ -77,85 +76,50 @@ public class Main_1082_화염에서탈출 {
 			}
 			if (!fq.isEmpty()) {
 				int t = fq.size();
-//				for(int k=0; k<t; k++) {
-					
-				fCur = fq.poll();
-				fx = fCur[0];
-				fy = fCur[1];
-				for (int i = 0; i < 4; i++) {
-					fnx = fx + dir[i][0];
-					fny = fy + dir[i][1];
-					if (fnx > -1 && fny > -1 && fnx < X && fny < Y) {
-						if (map[fnx][fny] == '.') {
-							map[fnx][fny] = '*';
-							fq.offer(new int[] { fnx, fny });
+				for (int k = 0; k < t; k++) {
+
+					fCur = fq.poll();
+					fx = fCur[0];
+					fy = fCur[1];
+					for (int i = 0; i < 4; i++) {
+						fnx = fx + dir[i][0];
+						fny = fy + dir[i][1];
+						if (fnx > -1 && fny > -1 && fnx < X && fny < Y) {
+							if (map[fnx][fny] == '.' && !visited[fnx][fny]) {
+								map[fnx][fny] = '*';
+								visited[fnx][fny] = true;
+								fq.offer(new int[] { fnx, fny });
 							}
 						}
 					}
-//				}
+				}
 			}
 
 			if (!sq.isEmpty()) {
-				sCur = sq.poll();
-				sx = sCur[0];
-				sy = sCur[1];
-				cnt = sCur[2];
-				cnt++;
-				for (int i = 0; i < 4; i++) {
-					snx = sx + dir[i][0];
-					sny = sy + dir[i][1];
-					if (snx > -1 && sny > -1 && snx < X && sny < Y) {
-						if (map[snx][sny] == '.') {
-							map[snx][sny] = 'S';
-							sq.offer(new int[] { snx, sny, cnt });
+				int t = sq.size();
+				for (int k = 0; k < t; k++) {
+					sCur = sq.poll();
+					sx = sCur[0];
+					sy = sCur[1];
+					cnt = sCur[2];
+					cnt++;
+					for (int i = 0; i < 4; i++) {
+						snx = sx + dir[i][0];
+						sny = sy + dir[i][1];
+						if (snx > -1 && sny > -1 && snx < X && sny < Y) {
+							if (map[snx][sny] == '.' && !visited[snx][sny]) {
+								visited[snx][sny] = true;
+								sq.offer(new int[] { snx, sny, cnt });
+							}
+							if (map[snx][sny] == 'D') {
+								min = cnt;
+								return;
+							}
 						}
-						if (map[snx][sny] == 'D') {
-							min = cnt;
-							return;
-						}
-					}
-				}
-			}
-			for(int i=0; i<X; i++) {
-				System.out.println(Arrays.toString(map[i]));
-			}
-			System.out.println();
-		}
-	}
-
-	public static void bfs(int sx, int sy) {
-		LinkedList<int[]> sq = new LinkedList<>();
-
-		int cnt = 0;
-		sq.offer(new int[] { sx, sy, ++cnt });
-		int snx, sny;
-		int[] sCur;
-		snx = sx;
-		sny = sy;
-		while (!sq.isEmpty()) {
-			if (sq.isEmpty()) {
-				min = Integer.MAX_VALUE;
-				return;
-			}
-			sCur = sq.poll();
-			sx = sCur[0];
-			sy = sCur[1];
-			cnt = sCur[2];
-			cnt++;
-			for (int i = 0; i < 4; i++) {
-				snx = sx + dir[i][0];
-				sny = sy + dir[i][1];
-				if (snx > -1 && sny > -1 && snx < X && sny < Y) {
-					if (map[snx][sny] == '.') {
-						map[snx][sny] = 'S';
-						sq.offer(new int[] { snx, sny, cnt });
-					}
-					if (map[snx][sny] == 'D') {
-						min = cnt;
-						return;
 					}
 				}
 			}
 		}
 	}
+
 }
