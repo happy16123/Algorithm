@@ -2,7 +2,6 @@ package swea.d3;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Solution_1244_최대상금 {
@@ -20,22 +19,24 @@ public class Solution_1244_최대상금 {
 			st = new StringTokenizer(br.readLine(), " ");
 			target = st.nextToken().toCharArray();
 			cycle = Integer.parseInt(st.nextToken());
-			max = Integer.MIN_VALUE;
-			dfs(0);
+			max = Integer.parseInt(String.valueOf(target));
+			dfs(0, 0);
 			System.out.println("#" + t + " " + max);
 		}
 	}
 
-	public static void dfs(int cnt) {
+	public static void dfs(int cnt, int start) {
 		if (cycle == cnt) {
-			max = Math.max(Integer.parseInt(new String(target)), max);
+			max = Math.max(Integer.parseInt(String.valueOf(target)), max);
 			return;
 		}
-		for (int i = 0, size = target.length; i < size; i++) {
+		for (int i = start, size = target.length; i < size; i++) {
+			int t1 = target[i];
 			for(int j = i+1; j<size; j++) {
-				if(target[i] <= target[j]) {
+				int t2 = target[j];
+				if(t1 <= t2) {
 					swap(i, j);
-					dfs(cnt + 1);
+					dfs(cnt + 1, i);
 					swap(i, j);
 				}
 			}
