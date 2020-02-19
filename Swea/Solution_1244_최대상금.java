@@ -21,12 +21,12 @@ public class Solution_1244_최대상금 {
 			target = st.nextToken().toCharArray();
 			cycle = Integer.parseInt(st.nextToken());
 			max = Integer.MIN_VALUE;
-			dfs(0, 0);
+			dfs(0);
 			System.out.println("#" + t + " " + max);
 		}
 	}
 
-	public static void dfs(int cnt, int start) {
+	public static void dfs(int cnt) {
 		if (cycle == cnt) {
 			max = Math.max(Integer.parseInt(new String(target)), max);
 			return;
@@ -35,7 +35,7 @@ public class Solution_1244_최대상금 {
 			for(int j = i+1; j<size; j++) {
 				if(target[i] <= target[j]) {
 					swap(i, j);
-					dfs(cnt + 1, i);
+					dfs(cnt + 1);
 					swap(i, j);
 				}
 			}
