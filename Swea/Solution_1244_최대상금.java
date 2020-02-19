@@ -19,7 +19,7 @@ public class Solution_1244_최대상금 {
 			st = new StringTokenizer(br.readLine(), " ");
 			target = st.nextToken().toCharArray();
 			cycle = Integer.parseInt(st.nextToken());
-			max = Integer.parseInt(String.valueOf(target));
+			max = 0;
 			dfs(0, 0);
 			System.out.println("#" + t + " " + max);
 		}
@@ -31,18 +31,14 @@ public class Solution_1244_최대상금 {
 			return;
 		}
 		for (int i = start, size = target.length; i < size; i++) {
-			int t1 = target[i];
-			for(int j = i+1; j<size; j++) {
-				int t2 = target[j];
-				if(t1 <= t2) {
-					swap(i, j);
-					dfs(cnt + 1, i);
-					swap(i, j);
-				}
+			for (int j = i + 1; j < size; j++) {
+				swap(i, j);
+				dfs(cnt + 1, i);
+				swap(i, j);
 			}
 		}
 	}
-	
+
 	public static void swap(int i, int j) {
 		char temp = target[i];
 		target[i] = target[j];
