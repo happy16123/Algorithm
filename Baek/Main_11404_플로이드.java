@@ -45,6 +45,7 @@ public class Main_11404_플로이드 {
 		
 		for(int i=0; i<N; i++) {
 			for(int j=0; j<N; j++) {
+				D[i][j] = D[i][j] == INF ? 0 : D[i][j];
 				System.out.print(D[i][j] + " ");
 			}
 			System.out.println();
