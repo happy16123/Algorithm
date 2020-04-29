@@ -52,7 +52,6 @@ public class Solution_5658_보물상자_비밀번호 {
 			}
 
 			Arrays.sort(ans);
-			System.out.println(ans.length);
 
 			sb.append("#" + t + " " + ans[ans.length - K] + "\n");
 		}
