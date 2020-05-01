@@ -44,7 +44,7 @@ public class Solution_1949_등산로_조성 {
 				for (int j = 0; j < N; j++) {
 					if (map[i][j] == max) {
 						visited[i][j] = true;
-						dfs(i, j, 1, 0);
+						dfs(i, j, 1);
 						visited[i][j] = false;
 					}
 				}
@@ -54,14 +54,14 @@ public class Solution_1949_등산로_조성 {
 		System.out.println(sb.toString());
 	}
 
-	public static void dfs(int r, int c, int cnt, int cut) {
+	public static void dfs(int r, int c, int cnt) {
 		for (int i = 0; i < 4; i++) {
 			int nr = r + dir[i][0];
 			int nc = c + dir[i][1];
 			if (nr > -1 && nc > -1 && nr < N && nc < N && !visited[nr][nc]) {
 				if (map[r][c] > map[nr][nc]) {
 					visited[nr][nc] = true;
-					dfs(nr, nc, cnt + 1, cut);
+					dfs(nr, nc, cnt + 1);
 					visited[nr][nc] = false;
 				}
 				else if (!ch && map[r][c] <= map[nr][nc]) {
@@ -70,7 +70,7 @@ public class Solution_1949_등산로_조성 {
 							visited[nr][nc] = true;
 							ch = true;
 							map[nr][nc] -= k;
-							dfs(nr, nc, cnt + 1, k);
+							dfs(nr, nc, cnt + 1);
 							map[nr][nc] += k;
 							ch = false;
 							visited[nr][nc] = false;
