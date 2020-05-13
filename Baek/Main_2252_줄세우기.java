@@ -25,11 +25,11 @@ public class Main_2252_줄세우기 {
 		sb = new StringBuilder();
 		list = new ArrayList[N + 1];
 		indegree = new int[N + 1];
-		
-		for(int i=0; i<N+1; i++) {
+
+		for (int i = 0; i < N + 1; i++) {
 			list[i] = new ArrayList<Integer>();
 		}
-		
+
 		for (int i = 0; i < E; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			int v1 = Integer.parseInt(st.nextToken());
@@ -37,7 +37,7 @@ public class Main_2252_줄세우기 {
 			list[v1].add(v2);
 			indegree[v2]++;
 		}
-		
+
 		sort();
 		System.out.println(sb.toString());
 	}
